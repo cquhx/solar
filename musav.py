@@ -2,12 +2,14 @@ import random
 from functools import cmp_to_key
 
 
+# 一个乘车请求，包含开始、结束和路程时间
 class Trip:
     def __init__(self, b, f):
         self.start_time = b
         self.finish_time = f
         self.cost = f - b
 
+    # 重载小于号，让花费时间少的排前面
     def __lt__(self, other):
         return self.cost < other.cost
 
@@ -15,10 +17,12 @@ class Trip:
         return str(self.start_time) + ' ' + str(self.finish_time)
 
 
+# 判断两个Trip是否相交
 def intersect(trip1, trip2):
     return not (trip1.start_time >= trip2.finish_time or trip1.finish_time <= trip2.start_time)
 
 
+# 为每个电动出租车分配单子
 def k_vsta(k, e_avs, p_ch, p_tr, e_cs, t_cs, _trips, T):
 
     u = [[] for i in range(k)]

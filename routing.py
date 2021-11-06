@@ -1,20 +1,24 @@
 from csp import Region
 from csp import get_pos
 
-# 1:up 2:right 3:down 4:left
 
+# 获得Region r的pos处的太阳能收获量
 def get_solar(r, pos):
     return  r.g[pos].s
 
 
+# 返回路径和预计的太阳能收获量
 def get_routing(start, end, r):
     dp = [[0 for i in range(r.width)] for j in range(r.height)]
     path = [[0 for i in range(r.width)] for j in range(r.height)]
-    sx, sy = get_pos(start)
-    ex, ey = get_pos(end)
+    sx, sy = get_pos(start)   # 开始的坐标
+    ex, ey = get_pos(end)     # 结束的坐标
 
     route = []
     dp[sx][sy] = get_solar(r, start)
+
+    # path的值的含义(表示上个格子是如何到达这个格子的)
+    # 1:up 2:right 3:down 4:left
 
     if sx > ex:
         if sy > ey:
@@ -78,6 +82,7 @@ def get_routing(start, end, r):
             print(round(get_solar(r, i * r.width + j), 2), end=' ')
         print('\n')
 
+    # 回溯，获得最佳路径
     route = [[ex, ey]]
     now_x = ex
     now_y = ey
